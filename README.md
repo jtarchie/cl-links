@@ -5,7 +5,7 @@ bundle
 ragel -R -e -F1 lib/parse.rl
 rubocop -a
 rspec
-ruby build.rb # generates a list of only US cities at the moment
+ruby collect/run.rb # generates a list of only US cities at the moment
 ```
 
 # Run

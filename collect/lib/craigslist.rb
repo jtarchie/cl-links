@@ -5,7 +5,7 @@ require_relative 'memoize'
 
 Capybara.default_driver = :selenium_chrome_headless
 
-CAPTURED_DIR = File.join(__dir__, '..', 'captured')
+DATA_DIR = File.join(__dir__, '..', '..', 'data')
 
 # Allows a basic interaction with Craigslist
 # mainly for getting information about cities
@@ -14,7 +14,7 @@ class Craigslist
   include JSONMemoize
 
   def countries
-    @countries ||= capture(File.join(CAPTURED_DIR, 'countries.json')) do
+    @countries ||= capture(File.join(DATA_DIR, 'countries.json')) do
       visit 'https://www.craigslist.org/about/sites'
       page.execute_script(<<~JAVASCRIPT)
         return (function() {
@@ -48,7 +48,7 @@ class Craigslist
     include JSONMemoize
 
     def nearby_cities
-      capture(File.join(CAPTURED_DIR, country_name, region_name, name, 'nearby_cities.json')) do
+      capture(File.join(DATA_DIR, country_name, region_name, name, 'nearby_cities.json')) do
         visit File.join(url, 'search')
 
         page.execute_script(<<~JAVASCRIPT)
