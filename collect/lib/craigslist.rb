@@ -5,7 +5,7 @@ require_relative 'memoize'
 
 Capybara.default_driver = :selenium_chrome_headless
 
-DATA_DIR = File.join(__dir__, '..', '..', 'data')
+DATA_DIR = File.join(__dir__, '..', '..', '.data')
 
 # Allows a basic interaction with Craigslist
 # mainly for getting information about cities

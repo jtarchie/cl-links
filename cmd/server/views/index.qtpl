@@ -1,0 +1,38 @@
+{% import "github.com/jtarchie/cl-search/pkg/load" %}
+{% import "github.com/jtarchie/cl-search/pkg/query" %}
+
+{% func Index(originalQuery string, query *query.Query, cities load.Cities) %}
+<html>
+  <head>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.2.0/turbolinks.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <style>
+        form input {
+            width: 100%;
+        }
+      </style>
+  </head>
+  <body>
+      <div class="container">
+          <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                  <form action="/">
+                      <input type="text" value="{%s originalQuery %}" placeholder="q:'classic guitar' year:<1995 include-pics" name="query">
+                      <p>Example: <a href="/?query={%u `q:"jeep truck" include_nearby has-image bundle-duplicates auto-year:<1985` %}">q:"jeep truck" include_nearby has-image bundle-duplicates auto-year:<1985</a></p>
+                  </form>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                  <ul>
+                  {% for _, city := range cities %}
+                    <li><a target="_blank" href="{%s query.URL(city) %}">{%s city.CountryName %} / {%s city.RegionName %} / {%s city.Name %}</a></li>
+                  {% endfor %}
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </body>
+</html>
+{% endfunc %}

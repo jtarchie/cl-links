@@ -15,4 +15,4 @@ payload = us_cities.map do |city|
   }
 end
 
-File.write(File.join(DATA_DIR, 'us.json'), JSON.pretty_generate(payload))
+File.write(File.join(DATA_DIR, 'processed.json'), JSON.pretty_generate(payload))
