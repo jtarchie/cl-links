@@ -1,8 +1,11 @@
 FROM golang AS builder
 
+RUN apt-get update && apt-get install -y upx-ucl
+
 COPY . /app
 WORKDIR /app
-RUN CGO_ENABLED=0 GOOS=linux go build cmd/server/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" cmd/server/main.go
+RUN upx main
 
 FROM gcr.io/distroless/base
 
