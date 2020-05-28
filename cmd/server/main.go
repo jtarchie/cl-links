@@ -8,7 +8,6 @@ import (
 	query "github.com/jtarchie/cl-search/pkg/query"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"log"
 	"net/http"
 	"os"
 )
@@ -16,10 +15,7 @@ import (
 //go:generate go run github.com/valyala/quicktemplate/qtc
 
 func main() {
-	cities, err := load.AllCities()
-	if err != nil {
-		log.Fatalf("cannot load YAML: %s", err)
-	}
+	cities := load.AllCities()
 
 	// Echo instance
 	e := echo.New()

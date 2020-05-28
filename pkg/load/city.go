@@ -1,14 +1,11 @@
 package load
 
 import (
-	"fmt"
-	"gopkg.in/yaml.v2"
-	"io/ioutil"
 	"sort"
 	"strings"
 )
 
-//go:generate go run github.com/omeid/go-resources/cmd/resources -package load -declare -var=FS -output=assets.go ../../.data/processed.json
+//go:generate go run ../json2go.go
 
 type City struct {
 	Name         string            `yaml:"name"`
@@ -54,25 +51,8 @@ func (c Cities) Swap(i, j int) {
 	c[i], c[j] = c[j], c[i]
 }
 
-func AllCities() (Cities, error) {
-	var cities Cities
+func AllCities() Cities {
+	sort.Sort(allCities)
 
-	reader, err := FS.Open("/../../.data/processed.json")
-	if err != nil {
-		return nil, fmt.Errorf("cannot load file: %s", err)
-	}
-
-	contents, err := ioutil.ReadAll(reader)
-	if err != nil {
-		return nil, fmt.Errorf("cannot load YAML reader: %s", err)
-	}
-
-	err = yaml.UnmarshalStrict(contents, &cities)
-	if err != nil {
-		return nil, fmt.Errorf("cannot unmarshal YAML reader: %s", err)
-	}
-
-	sort.Sort(cities)
-
-	return cities, nil
+	return allCities
 }
