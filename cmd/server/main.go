@@ -25,6 +25,7 @@ func main() {
 
 	// Middleware
 	e.Use(middleware.Logger())
+	e.Use(middleware.GzipWithConfig(middleware.DefaultGzipConfig))
 
 	e.GET("/", func(context echo.Context) error {
 		params, err := parser.ParseParams(context.QueryParam("query"))
