@@ -9,6 +9,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"log"
+	"net/http"
 	"os"
 )
 
@@ -24,8 +25,10 @@ func main() {
 	e := echo.New()
 
 	// Middleware
+	e.Use(middleware.GzipWithConfig(middleware.GzipConfig{
+		Level: 5,
+	}))
 	e.Use(middleware.Logger())
-	e.Use(middleware.GzipWithConfig(middleware.DefaultGzipConfig))
 
 	e.GET("/", func(context echo.Context) error {
 		params, err := parser.ParseParams(context.QueryParam("query"))
@@ -33,13 +36,11 @@ func main() {
 			return err
 		}
 
-		views.WriteIndex(
-			context.Response().Writer,
+		return context.HTML(http.StatusOK, views.Index(
 			context.QueryParam("query"),
 			query.NewQuery(params),
 			cities,
-		)
-		return nil
+		))
 	})
 
 	port := os.Getenv("PORT")
