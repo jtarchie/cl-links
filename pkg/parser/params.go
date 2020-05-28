@@ -22,8 +22,11 @@ func NewRangeFromString(r string) *Range {
 	} else {
 		parts := strings.Split(r, "-")
 
-		min, _ = strconv.Atoi(parts[0])
-		if len(parts) == 2 {
+		if parts[0] != "" {
+			min, _ = strconv.Atoi(parts[0])
+		}
+
+		if parts[1] != "" {
 			max, _ = strconv.Atoi(parts[1])
 		}
 	}
@@ -84,6 +87,19 @@ func (q Params) Keys() []string {
 	}
 
 	return keys
+}
+
+func (q Params) GetInteger(s string) (int, error) {
+	v, ok := q.fields[s]
+	if !ok {
+		return 0, nil
+	}
+
+	if r, ok := v.(int); ok {
+		return r, nil
+	}
+
+	return 0, fmt.Errorf("could not convert %q to a int type", s)
 }
 
 func NewParams(fields map[string]interface{}) *Params {

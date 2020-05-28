@@ -5,6 +5,7 @@ import (
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"sort"
+	"strings"
 )
 
 //go:generate go run github.com/omeid/go-resources/cmd/resources -package load -declare -var=FS -output=assets.go ../../.data/processed.json
@@ -18,6 +19,22 @@ type City struct {
 }
 
 type Cities []City
+
+func (c Cities) FilterByString(
+	column func(city City) string,
+	needle string,
+) Cities {
+	var newCities Cities
+
+	needle = strings.ToLower(needle)
+
+	for _, c := range c {
+		if strings.Contains(strings.ToLower(column(c)), needle) {
+			newCities = append(newCities, c)
+		}
+	}
+	return newCities
+}
 
 func (c Cities) Len() int {
 	return len(c)

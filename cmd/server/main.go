@@ -36,10 +36,12 @@ func main() {
 			return err
 		}
 
+		q := query.NewQuery(params)
+
 		return context.HTML(http.StatusOK, views.Index(
 			context.QueryParam("query"),
-			query.NewQuery(params),
-			cities,
+			q,
+			q.Filter(cities),
 		))
 	})
 

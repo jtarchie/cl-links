@@ -27,11 +27,22 @@ var _ = Describe("ParseParams", func() {
 		Expect(r.Min).To(Equal(min))
 		Expect(r.Max).To(Equal(max))
 	},
-		Entry("only min", "price:2000", 2000, math.MaxInt64),
+		Entry("only min", "price:2000-", 2000, math.MaxInt64),
 		Entry("only min with greater than", "price:>2000", 2000, math.MaxInt64),
 		Entry("only max", "price:-2000", 0, 2000),
 		Entry("only max with less than", "price:<2000", 0, 2000),
 		Entry("with min and max range", "price:2000-3000", 2000, 3000),
+	)
+
+	DescribeTable("parsing integers", func(q string, expected int) {
+		params, err := parser.ParseParams(q)
+		Expect(err).NotTo(HaveOccurred())
+
+		r, err := params.GetInteger("top")
+		Expect(err).NotTo(HaveOccurred())
+		Expect(r).To(Equal(expected))
+	},
+		Entry("find the an integer", "top:10", 10),
 	)
 
 	DescribeTable("parsing booleans", func(q string, expected bool) {
@@ -60,7 +71,7 @@ var _ = Describe("ParseParams", func() {
 	)
 
 	It("handles multiple types in one", func() {
-		q := `price:2000 has-picture q:"my name is earl"`
+		q := `price:2000- has-picture q:"my name is earl"`
 
 		params, err := parser.ParseParams(q)
 		Expect(err).NotTo(HaveOccurred())
