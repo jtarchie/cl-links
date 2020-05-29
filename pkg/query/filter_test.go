@@ -6,6 +6,7 @@ import (
 	"github.com/jtarchie/cl-search/pkg/query"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"sort"
 )
 
 var _ = Describe("Filter", func() {
@@ -18,8 +19,10 @@ var _ = Describe("Filter", func() {
 			{CountryName: "A", RegionName: "1", Name: "aaa"},
 			{CountryName: "A", RegionName: "2", Name: "zzz"},
 			{CountryName: "B", RegionName: "3", Name: "000"},
-			{CountryName: "C", RegionName: "4", Name: "999"},
+			{CountryName: "C"},
+			{CountryName: "C", NearbyCities: map[string]string{"a":"1"}},
 		}
+		sort.Sort(cities)
 	})
 
 	parseQuery := func(qs string) *query.Query {
@@ -53,6 +56,18 @@ var _ = Describe("Filter", func() {
 			q := parseQuery(`city:"000"`)
 			Expect(q.Filter(cities)).To(Equal(load.Cities{
 				{CountryName: "B", RegionName: "3", Name: "000"},
+			}))
+		})
+	})
+
+	When("specifying the top city", func() {
+		It("returns only in that region", func() {
+			q := parseQuery(`top:nearby`)
+			Expect(q.Filter(cities)).To(Equal(load.Cities{
+				{CountryName: "A", RegionName: "1", Name: "aaa"},
+				{CountryName: "A", RegionName: "2", Name: "zzz"},
+				{CountryName: "B", RegionName: "3", Name: "000"},
+				{CountryName: "C", NearbyCities: map[string]string{"a":"1"}},
 			}))
 		})
 	})

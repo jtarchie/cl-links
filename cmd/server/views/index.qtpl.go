@@ -50,7 +50,7 @@ func StreamIndex(qw422016 *qt422016.Writer, originalQuery string, query *query.Q
 	qw422016.N().S(`" placeholder="q:'classic guitar' year:<1995 include-pics" name="query">
                       `)
 //line views/index.qtpl:22
-	defaultQuery := `q:"jeep truck" include_nearby has-image bundle-duplicates auto-year:<1985 region:"cali"`
+	defaultQuery := `q:"jeep truck" include_nearby has-image bundle-duplicates auto-year:<1985 top:nearby`
 
 //line views/index.qtpl:22
 	qw422016.N().S(`

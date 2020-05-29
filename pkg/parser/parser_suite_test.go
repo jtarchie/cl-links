@@ -66,6 +66,7 @@ var _ = Describe("ParseParams", func() {
 		Expect(err).NotTo(HaveOccurred())
 		Expect(r).To(Equal(expected))
 	},
+		Entry("a single word", `q:city`, "city"),
 		Entry("double quotes", `q:"my name is earl"`, "my name is earl"),
 		Entry("single quotes", `q:'my name is earl'`, "my name is earl"),
 	)

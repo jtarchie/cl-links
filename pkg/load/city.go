@@ -33,6 +33,28 @@ func (c Cities) FilterByString(
 	return newCities
 }
 
+func (c Cities) Unique(
+	duplicate func(city City) interface{},
+) Cities {
+	var newCities Cities
+	duplicates := map[interface{}]Cities{}
+
+	for _, city := range c {
+		key := duplicate(city)
+		if _, ok := duplicates[key]; !ok {
+			duplicates[key] = Cities{}
+		}
+
+		duplicates[key] = append(duplicates[key], city)
+	}
+
+	for _, cities := range duplicates {
+		newCities = append(newCities, cities[0])
+	}
+
+	return newCities
+}
+
 func (c Cities) Len() int {
 	return len(c)
 }

@@ -19,7 +19,7 @@ func ParseParams(data string) (*Params, error) {
     %%{
         action mark { mark = p }
         action param {
-            if _, ok := params[param]; !ok {
+            if _, ok := params[param]; !ok && param != "" {
                 params[param] = true
             }
             param = strings.ReplaceAll(data[mark:p], "-", "_")
@@ -31,7 +31,7 @@ func ParseParams(data string) (*Params, error) {
             params[param] = data[mark:p] == "true"
         }
         action string {
-            params[param] = data[mark+1:p-1]
+            params[param] = data[mark:p]
         }
         action equality {
             params[param] = NewRangeFromString(data[mark:p])
@@ -44,7 +44,10 @@ func ParseParams(data string) (*Params, error) {
         range = (digit+ "-" | "-" digit+ | digit+ "-" digit+) >mark %range;
         equality = ((">" | "<") digit+) >mark %equality;
         boolean = ("true" | "false") >mark %boolean;
-        string  = ( "'" ([^'] | /\\./)* "'" | '"' ([^"] | /\\./)* '"') >mark %string;
+        string  =
+            ((alpha+ - boolean)  >mark %string) |
+            "'" (([^'] | /\\./)* >mark %string) "'" |
+            '"' (([^"] | /\\./)* >mark %string) '"';
         integer = digit+ >mark %integer;
         value   = param (":" (integer | range | equality | boolean | string))?;
         main := |*
@@ -59,7 +62,7 @@ func ParseParams(data string) (*Params, error) {
         return nil, fmt.Errorf("Cannot parse: %d", p)
     }
 
-    if _, ok := params[param]; !ok {
+    if _, ok := params[param]; !ok && param != "" {
         params[param] = true
     }
 

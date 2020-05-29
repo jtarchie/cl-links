@@ -19,7 +19,7 @@
               <div class="col-sm-12 col-md-12 col-lg-12">
                   <form action="/">
                       <input type="text" value="{%s originalQuery %}" placeholder="q:'classic guitar' year:<1995 include-pics" name="query">
-                      {% code defaultQuery := `q:"jeep truck" include_nearby has-image bundle-duplicates auto-year:<1985 region:"cali"` %}
+                      {% code defaultQuery := `q:"jeep truck" include_nearby has-image bundle-duplicates auto-year:<1985 top:nearby` %}
                       <p>Example: <a href="/?query={%u defaultQuery %}">{%s defaultQuery %}</a></p>
                   </form>
               </div>
