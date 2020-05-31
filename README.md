@@ -15,14 +15,7 @@ heroku container:push web
 heroku container:release web
 ```
 
-Hey!
-
-The thing I use to help me search craigslist.
-It is a wrapper around searching Craigslist around multiple cities.Because of of CL's TOS, I cannot actually scrape the cities.
-
-https://yard-search.herokuapp.com/
-
-Two ways to use it.
+# Usage
 
 1. Go to craigslist, do a search, and copy the URL of the search result page.
 
