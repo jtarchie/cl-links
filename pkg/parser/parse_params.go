@@ -1,5 +1,5 @@
 
-//line parse.rl:1
+//line parse_params.rl:1
 package parser;
 
 import "strings"
@@ -7,9 +7,9 @@ import "fmt"
 import "strconv"
 
 
-//line parse.rl:8
+//line parse_params.rl:8
 
-//line parse.go:13
+//line parse_params.go:13
 const query_start int = 10
 const query_first_final int = 10
 const query_error int = 0
@@ -17,7 +17,7 @@ const query_error int = 0
 const query_en_main int = 10
 
 
-//line parse.rl:9
+//line parse_params.rl:9
 
 func ParseParams(data string) (*Params, error) {
     p, cs, pe, eof := 0, 0, len(data), len(data)
@@ -29,7 +29,7 @@ func ParseParams(data string) (*Params, error) {
     param  := ""
 
     
-//line parse.go:33
+//line parse_params.go:33
 	{
 	cs = query_start
 	ts = 0
@@ -37,7 +37,7 @@ func ParseParams(data string) (*Params, error) {
 	act = 0
 	}
 
-//line parse.go:41
+//line parse_params.go:41
 	{
 	if p == pe {
 		goto _test_eof
@@ -96,100 +96,100 @@ func ParseParams(data string) (*Params, error) {
 	}
 	goto st_out
 tr0:
-//line parse.rl:54
+//line parse_params.rl:54
 p = (te) - 1
 
 	goto st10
 tr10:
-//line parse.rl:20
+//line parse_params.rl:20
  mark = p 
-//line parse.rl:33
+//line parse_params.rl:33
 
             params[param] = data[mark:p]
         
-//line parse.rl:54
+//line parse_params.rl:54
 te = p+1
 
 	goto st10
 tr13:
-//line parse.rl:33
+//line parse_params.rl:33
 
             params[param] = data[mark:p]
         
-//line parse.rl:54
+//line parse_params.rl:54
 te = p+1
 
 	goto st10
 tr23:
-//line parse.rl:55
+//line parse_params.rl:55
 te = p+1
 
 	goto st10
 tr26:
-//line parse.rl:21
+//line parse_params.rl:21
 
             if _, ok := params[param]; !ok && param != "" {
                 params[param] = true
             }
             param = strings.ReplaceAll(data[mark:p], "-", "_")
         
-//line parse.rl:54
+//line parse_params.rl:54
 te = p
 p--
 
 	goto st10
 tr29:
-//line parse.rl:54
+//line parse_params.rl:54
 te = p
 p--
 
 	goto st10
 tr30:
-//line parse.rl:27
+//line parse_params.rl:27
 
             params[param] = NewRangeFromString(data[mark:p])
         
-//line parse.rl:54
+//line parse_params.rl:54
 te = p
 p--
 
 	goto st10
 tr31:
-//line parse.rl:39
+//line parse_params.rl:39
 
             params[param], _ = strconv.Atoi(data[mark:p])
         
-//line parse.rl:54
+//line parse_params.rl:54
 te = p
 p--
 
 	goto st10
 tr33:
-//line parse.rl:36
+//line parse_params.rl:36
 
             params[param] = NewRangeFromString(data[mark:p])
         
-//line parse.rl:54
+//line parse_params.rl:54
 te = p
 p--
 
 	goto st10
 tr34:
-//line parse.rl:33
+//line parse_params.rl:33
 
             params[param] = data[mark:p]
         
-//line parse.rl:54
+//line parse_params.rl:54
 te = p
 p--
 
 	goto st10
 tr40:
-//line parse.rl:30
+//line parse_params.rl:30
 
             params[param] = data[mark:p] == "true"
         
-//line parse.rl:54
+//line parse_params.rl:54
 te = p
 p--
 
@@ -205,7 +205,7 @@ ts = 0
 //line NONE:1
 ts = p
 
-//line parse.go:209
+//line parse_params.go:209
 		switch data[p] {
 		case 32:
 			goto tr23
@@ -235,7 +235,7 @@ tr25:
 //line NONE:1
 te = p+1
 
-//line parse.rl:20
+//line parse_params.rl:20
  mark = p 
 	goto st11
 tr27:
@@ -248,7 +248,7 @@ te = p+1
 			goto _test_eof11
 		}
 	st_case_11:
-//line parse.go:252
+//line parse_params.go:252
 		switch data[p] {
 		case 45:
 			goto tr27
@@ -267,7 +267,7 @@ te = p+1
 		}
 		goto tr26
 tr28:
-//line parse.rl:21
+//line parse_params.rl:21
 
             if _, ok := params[param]; !ok && param != "" {
                 params[param] = true
@@ -280,7 +280,7 @@ tr28:
 			goto _test_eof1
 		}
 	st_case_1:
-//line parse.go:284
+//line parse_params.go:284
 		switch data[p] {
 		case 34:
 			goto st2
@@ -323,7 +323,7 @@ tr28:
 		}
 		goto tr9
 tr9:
-//line parse.rl:20
+//line parse_params.rl:20
  mark = p 
 	goto st3
 	st3:
@@ -331,7 +331,7 @@ tr9:
 			goto _test_eof3
 		}
 	st_case_3:
-//line parse.go:335
+//line parse_params.go:335
 		switch data[p] {
 		case 34:
 			goto tr13
@@ -340,7 +340,7 @@ tr9:
 		}
 		goto st3
 tr11:
-//line parse.rl:20
+//line parse_params.rl:20
  mark = p 
 	goto st4
 	st4:
@@ -348,7 +348,7 @@ tr11:
 			goto _test_eof4
 		}
 	st_case_4:
-//line parse.go:352
+//line parse_params.go:352
 		switch data[p] {
 		case 34:
 			goto tr15
@@ -360,7 +360,7 @@ tr15:
 //line NONE:1
 te = p+1
 
-//line parse.rl:33
+//line parse_params.rl:33
 
             params[param] = data[mark:p]
         
@@ -370,7 +370,7 @@ te = p+1
 			goto _test_eof12
 		}
 	st_case_12:
-//line parse.go:374
+//line parse_params.go:374
 		switch data[p] {
 		case 34:
 			goto tr13
@@ -391,7 +391,7 @@ te = p+1
 		}
 		goto tr16
 tr16:
-//line parse.rl:20
+//line parse_params.rl:20
  mark = p 
 	goto st6
 	st6:
@@ -399,7 +399,7 @@ tr16:
 			goto _test_eof6
 		}
 	st_case_6:
-//line parse.go:403
+//line parse_params.go:403
 		switch data[p] {
 		case 39:
 			goto tr13
@@ -408,7 +408,7 @@ tr16:
 		}
 		goto st6
 tr17:
-//line parse.rl:20
+//line parse_params.rl:20
  mark = p 
 	goto st7
 	st7:
@@ -416,7 +416,7 @@ tr17:
 			goto _test_eof7
 		}
 	st_case_7:
-//line parse.go:420
+//line parse_params.go:420
 		switch data[p] {
 		case 39:
 			goto tr20
@@ -428,7 +428,7 @@ tr20:
 //line NONE:1
 te = p+1
 
-//line parse.rl:33
+//line parse_params.rl:33
 
             params[param] = data[mark:p]
         
@@ -438,7 +438,7 @@ te = p+1
 			goto _test_eof13
 		}
 	st_case_13:
-//line parse.go:442
+//line parse_params.go:442
 		switch data[p] {
 		case 39:
 			goto tr13
@@ -447,7 +447,7 @@ te = p+1
 		}
 		goto st6
 tr3:
-//line parse.rl:20
+//line parse_params.rl:20
  mark = p 
 	goto st8
 	st8:
@@ -455,7 +455,7 @@ tr3:
 			goto _test_eof8
 		}
 	st_case_8:
-//line parse.go:459
+//line parse_params.go:459
 		if 48 <= data[p] && data[p] <= 57 {
 			goto st14
 		}
@@ -470,7 +470,7 @@ tr3:
 		}
 		goto tr30
 tr4:
-//line parse.rl:20
+//line parse_params.rl:20
  mark = p 
 	goto st15
 	st15:
@@ -478,7 +478,7 @@ tr4:
 			goto _test_eof15
 		}
 	st_case_15:
-//line parse.go:482
+//line parse_params.go:482
 		if data[p] == 45 {
 			goto st14
 		}
@@ -487,7 +487,7 @@ tr4:
 		}
 		goto tr31
 tr5:
-//line parse.rl:20
+//line parse_params.rl:20
  mark = p 
 	goto st9
 	st9:
@@ -495,7 +495,7 @@ tr5:
 			goto _test_eof9
 		}
 	st_case_9:
-//line parse.go:499
+//line parse_params.go:499
 		if 48 <= data[p] && data[p] <= 57 {
 			goto st16
 		}
@@ -510,7 +510,7 @@ tr5:
 		}
 		goto tr33
 tr6:
-//line parse.rl:20
+//line parse_params.rl:20
  mark = p 
 	goto st17
 	st17:
@@ -518,7 +518,7 @@ tr6:
 			goto _test_eof17
 		}
 	st_case_17:
-//line parse.go:522
+//line parse_params.go:522
 		switch {
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
@@ -529,7 +529,7 @@ tr6:
 		}
 		goto tr34
 tr7:
-//line parse.rl:20
+//line parse_params.rl:20
  mark = p 
 	goto st18
 	st18:
@@ -537,7 +537,7 @@ tr7:
 			goto _test_eof18
 		}
 	st_case_18:
-//line parse.go:541
+//line parse_params.go:541
 		if data[p] == 97 {
 			goto st19
 		}
@@ -616,7 +616,7 @@ tr7:
 		}
 		goto tr40
 tr8:
-//line parse.rl:20
+//line parse_params.rl:20
  mark = p 
 	goto st23
 	st23:
@@ -624,7 +624,7 @@ tr8:
 			goto _test_eof23
 		}
 	st_case_23:
-//line parse.go:628
+//line parse_params.go:628
 		if data[p] == 114 {
 			goto st24
 		}
@@ -735,7 +735,7 @@ tr8:
 	_out: {}
 	}
 
-//line parse.rl:59
+//line parse_params.rl:59
 
 
     if cs < query_first_final {
