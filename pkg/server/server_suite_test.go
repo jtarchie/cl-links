@@ -1,4 +1,4 @@
-package parser_test
+package server_test
 
 import (
 	"testing"
@@ -7,7 +7,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-func TestParser(t *testing.T) {
+func TestServer(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Parser Suite")
+	RunSpecs(t, "Server Suite")
 }

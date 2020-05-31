@@ -3,6 +3,7 @@ package parser
 import (
 	"fmt"
 	"math"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -85,6 +86,8 @@ func (q Params) Keys() []string {
 	for k, _ := range q.fields {
 		keys = append(keys, k)
 	}
+
+	sort.Strings(keys)
 
 	return keys
 }

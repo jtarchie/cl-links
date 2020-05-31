@@ -51,6 +51,9 @@ func ParseParams(data string) (*Params, error) {
         integer = digit+ >mark %integer;
         value   = param (":" (integer | range | equality | boolean | string))?;
         main := |*
+            "https://" => {
+                return ParseURL(data)
+            };
             value => {};
             space => {};
         *|;

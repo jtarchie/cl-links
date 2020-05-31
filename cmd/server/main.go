@@ -2,13 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/jtarchie/cl-search/cmd/server/views"
 	"github.com/jtarchie/cl-search/pkg/load"
-	"github.com/jtarchie/cl-search/pkg/parser"
-	query "github.com/jtarchie/cl-search/pkg/query"
+	"github.com/jtarchie/cl-search/pkg/server"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"net/http"
 	"os"
 )
 
@@ -22,24 +19,11 @@ func main() {
 
 	// Middleware
 	e.Use(middleware.GzipWithConfig(middleware.GzipConfig{
-		Level: 5,
+		Level: 9,
 	}))
 	e.Use(middleware.Logger())
 
-	e.GET("/", func(context echo.Context) error {
-		params, err := parser.ParseParams(context.QueryParam("query"))
-		if err != nil {
-			return err
-		}
-
-		q := query.NewQuery(params)
-
-		return context.HTML(http.StatusOK, views.Index(
-			context.QueryParam("query"),
-			q,
-			q.Filter(cities),
-		))
-	})
+	e.GET("/", server.Index(cities))
 
 	port := os.Getenv("PORT")
 	if port == "" {

@@ -16,6 +16,19 @@ func TestQuery(t *testing.T) {
 }
 
 var _ = Describe("Query", func() {
+	When("generating the String the represents the query", func() {
+		It("generates a nice query", func() {
+			params, err := parser.ParseParams(`q:"truck" include-nearby:true price:1000-2000 auto-year:1980-2000`)
+			Expect(err).NotTo(HaveOccurred())
+
+			query := query.NewQuery(params)
+			qs, err := query.String()
+			Expect(err).NotTo(HaveOccurred())
+
+			Expect(qs).To(Equal(`auto_year:1980-2000 include_nearby:true price:1000-2000 q:"truck"`))
+		})
+	})
+
 	When("generating the URL", func() {
 		var city load.City
 
@@ -59,6 +72,14 @@ var _ = Describe("Query", func() {
 
 			query := query.NewQuery(params)
 			Expect(query.URL(city)).To(Equal(`https://city.craigslist.org/search/sss?max_auto_year=2000&max_price=2000&min_auto_year=1980&min_price=1000`))
+		})
+
+		It("handles categories for searching", func() {
+			params, err := parser.ParseParams(`q:"truck" category:"cta"`)
+			Expect(err).NotTo(HaveOccurred())
+
+			query := query.NewQuery(params)
+			Expect(query.URL(city)).To(Equal(`https://city.craigslist.org/search/cta?query=truck`))
 		})
 	})
 })
