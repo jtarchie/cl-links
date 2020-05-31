@@ -40,5 +40,6 @@ heroku container:release web
    * `include_nearby` (_boolean_) will have the search check nearby cities. For example, Denver will include Boulder, Colorado Springs, etc.
    * `has_image` (_boolean_) will only allow results that have images.
    * `bundle_duplicates` (_boolean_) will ensure that similar postings are bundled together.
+   * `top:nearby` (_string_) will filter results by the top result of some type. `nearby` will have filter cities, so only cities in a region with the most nearby cities are shown.
 
 With the query, you now have a set of links to just open in tabs.
