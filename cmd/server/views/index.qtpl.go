@@ -28,106 +28,165 @@ func StreamIndex(qw422016 *qt422016.Writer, originalQuery string, query *query.Q
 //line views/index.qtpl:4
 	qw422016.N().S(`
 <html>
-  <head>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.2.0/turbolinks.js"></script>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <style>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.2.0/turbolinks.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
         form input {
             width: 100%;
         }
-      </style>
-  </head>
-  <body>
-      <div class="container">
-          <div class="row">
-              <div class="col-sm-12 col-md-12 col-lg-12">
-                  <form action="/">
-                      <input type="text" value="`)
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <form action="/">
+                <input type="text" value="`)
 //line views/index.qtpl:21
 	qw422016.E().S(originalQuery)
 //line views/index.qtpl:21
-	qw422016.N().S(`" placeholder="q:'classic guitar' year:<1995 include-pics" name="query">
-                      `)
-//line views/index.qtpl:22
-	defaultQuery := `q:"jeep truck" include_nearby has-image bundle-duplicates auto-year:<1985 top:nearby`
+	qw422016.N().S(`" placeholder="q:'classic guitar' year:<1995 include-pics"
+                       name="query">
+                `)
+//line views/index.qtpl:23
+	defaultQuery := `q:"jeep truck" include_nearby has-image bundle-duplicates auto-year:<1985
+                top:nearby`
 
-//line views/index.qtpl:22
+//line views/index.qtpl:24
 	qw422016.N().S(`
-                      <p>Example: <a href="/?query=`)
-//line views/index.qtpl:23
+                <div class="collapse">
+                    <input type="checkbox" id="collapse-section1" aria-hidden="true">
+                    <label for="collapse-section1" aria-hidden="true">Help</label>
+                    <div>
+                        <p>
+                            Example: <a href="/?query=`)
+//line views/index.qtpl:30
 	qw422016.N().U(defaultQuery)
-//line views/index.qtpl:23
+//line views/index.qtpl:30
 	qw422016.N().S(`">`)
-//line views/index.qtpl:23
+//line views/index.qtpl:30
 	qw422016.E().S(defaultQuery)
-//line views/index.qtpl:23
-	qw422016.N().S(`</a></p>
-                  </form>
-              </div>
-          </div>
-          <div class="row">
-              <div class="col-sm-12 col-md-12 col-lg-12">
-                  <ul>
-                  `)
 //line views/index.qtpl:30
+	qw422016.N().S(`</a>
+                        </p>
+                        <ol>
+                            <li>
+                                <p>Go to craigslist, do a search, and copy the URL of the search result page.</p>
+                                <p>For example, click on &quot;cars+trucks, search for &quot;ranger, the URL is &quot;https://denver.craigslist.org/search/cta?query=ranger&quot;.</p>
+                                <p>Goto https://yard-search.herokuapp.com/, copy the URL into the search field, and hit
+                                    enter.</p>
+                                <p>The page will update with a query (<code>category:&quot;cta&quot; city:&quot;denver&quot;
+                                        q:&quot;ranger&quot;</code>).</p>
+                                <p>The URL has been translated into a query.</p>
+                                <p>Remove the <code>city:&quot;denver&quot;</code>, and it shows all cities across
+                                    craigslist.</p>
+                            </li>
+                            <li>
+                                <p>Use the undocumented query language that only JT knows.</p>
+                                <p>The query consists of query language, a syntax for key-value pairs
+                                    (<code>key:value</code>). The supported types are strings (<code>key:&quot;some
+                                        string&quot;</code>, <code>key:&#39;some string&#39;</code>, or <code>key:single-world</code>),
+                                    numbers (<code>key:1000</code>), ranges (<code>key:1000-2000</code>, <code>key:&gt;2000</code>,
+                                    or <code>key:&lt;2000</code>), and boolean (<code>key</code> same as
+                                    <code>key:true</code> or <code>key:false</code>).</p>
+                                <p>Keys that can appear in a query:</p>
+                                <ul>
+                                    <li><code>q</code> (<em>string</em>) is the keyword search query that will narrow
+                                        down results on Craigslist. For example, to search trucks use <code>q:&quot;trucks&quot;</code>.
+                                    </li>
+                                    <li><code>city</code>, <code>region</code>, <code>country</code> (<em>string</em>)
+                                        can narrow down the area the links are search for. For example, to search USA
+                                        use <code>country:&quot;US&quot;</code>.
+                                    </li>
+                                    <li><code>price</code> (<em>range</em>) can narrow down the price being search. For
+                                        example, looking for less than $2000 use <code>price:&lt;2000</code>.
+                                    </li>
+                                    <li><code>include_nearby</code> (<em>boolean</em>) will have the search check nearby
+                                        cities. For example, Denver will include Boulder, Colorado Springs, etc.
+                                    </li>
+                                    <li><code>has_image</code> (<em>boolean</em>) will only allow results that have
+                                        images.
+                                    </li>
+                                    <li><code>bundle_duplicates</code> (<em>boolean</em>) will ensure that similar
+                                        postings are bundled together.
+                                    </li>
+                                    <li><code>top:nearby</code> (<em>string</em>) will filter results by the top result
+                                        of some type. <code>nearby</code> will have filter cities, so only cities in a
+                                        region with the most nearby cities are shown.
+                                    </li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <ul>
+                `)
+//line views/index.qtpl:88
 	for _, city := range cities {
-//line views/index.qtpl:30
+//line views/index.qtpl:88
 		qw422016.N().S(`
-                    <li><a target="_blank" href="`)
-//line views/index.qtpl:31
+                <li><a target="_blank" href="`)
+//line views/index.qtpl:89
 		qw422016.E().S(query.URL(city))
-//line views/index.qtpl:31
+//line views/index.qtpl:89
 		qw422016.N().S(`">`)
-//line views/index.qtpl:31
+//line views/index.qtpl:89
 		qw422016.E().S(city.CountryName)
-//line views/index.qtpl:31
+//line views/index.qtpl:89
 		qw422016.N().S(` / `)
-//line views/index.qtpl:31
+//line views/index.qtpl:89
 		qw422016.E().S(city.RegionName)
-//line views/index.qtpl:31
-		qw422016.N().S(` / `)
-//line views/index.qtpl:31
+//line views/index.qtpl:89
+		qw422016.N().S(` /
+                        `)
+//line views/index.qtpl:90
 		qw422016.E().S(city.Name)
-//line views/index.qtpl:31
+//line views/index.qtpl:90
 		qw422016.N().S(`</a></li>
-                  `)
-//line views/index.qtpl:32
+                `)
+//line views/index.qtpl:91
 	}
-//line views/index.qtpl:32
+//line views/index.qtpl:91
 	qw422016.N().S(`
-                  </ul>
-              </div>
-          </div>
-      </div>
-  </body>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
 </html>
 `)
-//line views/index.qtpl:39
+//line views/index.qtpl:98
 }
 
-//line views/index.qtpl:39
+//line views/index.qtpl:98
 func WriteIndex(qq422016 qtio422016.Writer, originalQuery string, query *query.Query, cities load.Cities) {
-//line views/index.qtpl:39
+//line views/index.qtpl:98
 	qw422016 := qt422016.AcquireWriter(qq422016)
-//line views/index.qtpl:39
+//line views/index.qtpl:98
 	StreamIndex(qw422016, originalQuery, query, cities)
-//line views/index.qtpl:39
+//line views/index.qtpl:98
 	qt422016.ReleaseWriter(qw422016)
-//line views/index.qtpl:39
+//line views/index.qtpl:98
 }
 
-//line views/index.qtpl:39
+//line views/index.qtpl:98
 func Index(originalQuery string, query *query.Query, cities load.Cities) string {
-//line views/index.qtpl:39
+//line views/index.qtpl:98
 	qb422016 := qt422016.AcquireByteBuffer()
-//line views/index.qtpl:39
+//line views/index.qtpl:98
 	WriteIndex(qb422016, originalQuery, query, cities)
-//line views/index.qtpl:39
+//line views/index.qtpl:98
 	qs422016 := string(qb422016.B)
-//line views/index.qtpl:39
+//line views/index.qtpl:98
 	qt422016.ReleaseByteBuffer(qb422016)
-//line views/index.qtpl:39
+//line views/index.qtpl:98
 	return qs422016
-//line views/index.qtpl:39
+//line views/index.qtpl:98
 }
