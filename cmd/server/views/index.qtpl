@@ -11,7 +11,18 @@
         form input {
             width: 100%;
         }
+        #open-tabs {
+            float: right;
+        }
     </style>
+    <script>
+        function openLinksInTabs() {
+            Array.prototype.slice.call(document.querySelectorAll("#links a:not(.opened)")).slice(0, 10).forEach(function(a) {
+                window.open(a.getAttribute("href"), "_blank");
+                a.classList.add('.opened');
+            })
+        }
+    </script>
 </head>
 <body>
 <div class="container">
@@ -84,7 +95,8 @@
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12">
-            <ul>
+            <button id="open-tabs" onclick="openLinksInTabs(); return false;">Open Links in Tabs</button>
+            <ul id="links">
                 {% for _, city := range cities %}
                 <li><a target="_blank" href="{%s query.URL(city) %}">{%s city.CountryName %} / {%s city.RegionName %} /
                         {%s city.Name %}</a></li>

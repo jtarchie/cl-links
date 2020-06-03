@@ -36,7 +36,18 @@ func StreamIndex(qw422016 *qt422016.Writer, originalQuery string, query *query.Q
         form input {
             width: 100%;
         }
+        #open-tabs {
+            float: right;
+        }
     </style>
+    <script>
+        function openLinksInTabs() {
+            Array.prototype.slice.call(document.querySelectorAll("#links a:not(.opened)")).slice(0, 10).forEach(function(a) {
+                window.open(a.getAttribute("href"), "_blank");
+                a.classList.add('.opened');
+            })
+        }
+    </script>
 </head>
 <body>
 <div class="container">
@@ -44,17 +55,17 @@ func StreamIndex(qw422016 *qt422016.Writer, originalQuery string, query *query.Q
         <div class="col-sm-12 col-md-12 col-lg-12">
             <form action="/">
                 <input type="text" value="`)
-//line views/index.qtpl:21
+//line views/index.qtpl:32
 	qw422016.E().S(originalQuery)
-//line views/index.qtpl:21
+//line views/index.qtpl:32
 	qw422016.N().S(`" placeholder="q:'classic guitar' year:<1995 include-pics"
                        name="query">
                 `)
-//line views/index.qtpl:23
+//line views/index.qtpl:34
 	defaultQuery := `q:"jeep truck" include_nearby has-image bundle-duplicates auto-year:<1985
                 top:nearby`
 
-//line views/index.qtpl:24
+//line views/index.qtpl:35
 	qw422016.N().S(`
                 <div class="collapse">
                     <input type="checkbox" id="collapse-section1" aria-hidden="true">
@@ -62,13 +73,13 @@ func StreamIndex(qw422016 *qt422016.Writer, originalQuery string, query *query.Q
                     <div>
                         <p>
                             Example: <a href="/?query=`)
-//line views/index.qtpl:30
+//line views/index.qtpl:41
 	qw422016.N().U(defaultQuery)
-//line views/index.qtpl:30
+//line views/index.qtpl:41
 	qw422016.N().S(`">`)
-//line views/index.qtpl:30
+//line views/index.qtpl:41
 	qw422016.E().S(defaultQuery)
-//line views/index.qtpl:30
+//line views/index.qtpl:41
 	qw422016.N().S(`</a>
                         </p>
                         <ol>
@@ -126,34 +137,35 @@ func StreamIndex(qw422016 *qt422016.Writer, originalQuery string, query *query.Q
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12">
-            <ul>
+            <button id="open-tabs" onclick="openLinksInTabs(); return false;">Open Links in Tabs</button>
+            <ul id="links">
                 `)
-//line views/index.qtpl:88
+//line views/index.qtpl:100
 	for _, city := range cities {
-//line views/index.qtpl:88
+//line views/index.qtpl:100
 		qw422016.N().S(`
                 <li><a target="_blank" href="`)
-//line views/index.qtpl:89
+//line views/index.qtpl:101
 		qw422016.E().S(query.URL(city))
-//line views/index.qtpl:89
+//line views/index.qtpl:101
 		qw422016.N().S(`">`)
-//line views/index.qtpl:89
+//line views/index.qtpl:101
 		qw422016.E().S(city.CountryName)
-//line views/index.qtpl:89
+//line views/index.qtpl:101
 		qw422016.N().S(` / `)
-//line views/index.qtpl:89
+//line views/index.qtpl:101
 		qw422016.E().S(city.RegionName)
-//line views/index.qtpl:89
+//line views/index.qtpl:101
 		qw422016.N().S(` /
                         `)
-//line views/index.qtpl:90
+//line views/index.qtpl:102
 		qw422016.E().S(city.Name)
-//line views/index.qtpl:90
+//line views/index.qtpl:102
 		qw422016.N().S(`</a></li>
                 `)
-//line views/index.qtpl:91
+//line views/index.qtpl:103
 	}
-//line views/index.qtpl:91
+//line views/index.qtpl:103
 	qw422016.N().S(`
             </ul>
         </div>
@@ -162,31 +174,31 @@ func StreamIndex(qw422016 *qt422016.Writer, originalQuery string, query *query.Q
 </body>
 </html>
 `)
-//line views/index.qtpl:98
+//line views/index.qtpl:110
 }
 
-//line views/index.qtpl:98
+//line views/index.qtpl:110
 func WriteIndex(qq422016 qtio422016.Writer, originalQuery string, query *query.Query, cities load.Cities) {
-//line views/index.qtpl:98
+//line views/index.qtpl:110
 	qw422016 := qt422016.AcquireWriter(qq422016)
-//line views/index.qtpl:98
+//line views/index.qtpl:110
 	StreamIndex(qw422016, originalQuery, query, cities)
-//line views/index.qtpl:98
+//line views/index.qtpl:110
 	qt422016.ReleaseWriter(qw422016)
-//line views/index.qtpl:98
+//line views/index.qtpl:110
 }
 
-//line views/index.qtpl:98
+//line views/index.qtpl:110
 func Index(originalQuery string, query *query.Query, cities load.Cities) string {
-//line views/index.qtpl:98
+//line views/index.qtpl:110
 	qb422016 := qt422016.AcquireByteBuffer()
-//line views/index.qtpl:98
+//line views/index.qtpl:110
 	WriteIndex(qb422016, originalQuery, query, cities)
-//line views/index.qtpl:98
+//line views/index.qtpl:110
 	qs422016 := string(qb422016.B)
-//line views/index.qtpl:98
+//line views/index.qtpl:110
 	qt422016.ReleaseByteBuffer(qb422016)
-//line views/index.qtpl:98
+//line views/index.qtpl:110
 	return qs422016
-//line views/index.qtpl:98
+//line views/index.qtpl:110
 }
