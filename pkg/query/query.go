@@ -2,38 +2,41 @@ package query
 
 import (
 	"fmt"
-	"github.com/jtarchie/cl-search/pkg/load"
-	"github.com/jtarchie/cl-search/pkg/parser"
 	"math"
 	"net/url"
 	"sort"
 	"strconv"
 	"strings"
+
+	"github.com/jtarchie/cl-search/pkg/load"
+	"github.com/jtarchie/cl-search/pkg/parser"
 )
 
 type Query struct {
 	params *parser.Params
+	qs     values
 }
 
 func (q Query) URL(city load.City) string {
 	uri, _ := url.Parse(city.URL)
 
-	qs := url.Values{}
-
-	if v, _ := q.params.GetString("q"); v != "" {
-		qs.Add("query", v)
-	}
+	qs := q.qs
+	qs.Reset()
 
 	if v, _ := q.params.GetBoolean("bundle_duplicates"); v {
-		qs.Add("bundleDuplicates", "1")
+		qs.add("bundleDuplicates", "1")
 	}
 
 	if v, _ := q.params.GetBoolean("has_image"); v {
-		qs.Add("hasPic", "1")
+		qs.add("hasPic", "1")
+	}
+
+	if v, _ := q.params.GetString("q"); v != "" {
+		qs.add("query", v)
 	}
 
 	if v, _ := q.params.GetBoolean("include_nearby"); v {
-		qs.Add("searchNearby", "2")
+		qs.add("searchNearby", "2")
 
 		ids := []string{}
 		for _, id := range city.NearbyCities {
@@ -43,14 +46,14 @@ func (q Query) URL(city load.City) string {
 		sort.Strings(ids)
 
 		for _, id := range ids {
-			qs.Add("nearbyArea", id)
+			qs.add("nearbyArea", id)
 		}
 	}
 
 	for _, k := range q.params.Keys() {
 		if v, _ := q.params.GetRange(k); v != nil {
-			qs.Add(fmt.Sprintf("min_%s", k), strconv.Itoa(v.Min))
-			qs.Add(fmt.Sprintf("max_%s", k), strconv.Itoa(v.Max))
+			qs.add(fmt.Sprintf("max_%s", k), strconv.Itoa(v.Max))
+			qs.add(fmt.Sprintf("min_%s", k), strconv.Itoa(v.Min))
 		}
 	}
 
@@ -60,7 +63,8 @@ func (q Query) URL(city load.City) string {
 	}
 
 	uri.Path = fmt.Sprintf("/search/%s", category)
-	uri.RawQuery = qs.Encode()
+
+	uri.RawQuery = qs.String()
 
 	return uri.String()
 }

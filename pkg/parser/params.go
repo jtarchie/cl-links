@@ -83,7 +83,7 @@ func (q Params) GetString(s string) (string, error) {
 func (q Params) Keys() []string {
 	keys := []string{}
 
-	for k, _ := range q.fields {
+	for k := range q.fields {
 		keys = append(keys, k)
 	}
 

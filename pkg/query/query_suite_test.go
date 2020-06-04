@@ -1,10 +1,11 @@
 package query_test
 
 import (
+	"testing"
+
 	"github.com/jtarchie/cl-search/pkg/load"
 	"github.com/jtarchie/cl-search/pkg/parser"
 	"github.com/jtarchie/cl-search/pkg/query"
-	"testing"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -47,7 +48,7 @@ var _ = Describe("Query", func() {
 			Expect(err).NotTo(HaveOccurred())
 
 			query := query.NewQuery(params)
-			Expect(query.URL(city)).To(Equal(`https://city.craigslist.org/search/sss?query=truck`))
+			Expect(query.URL(city)).To(Equal(`https://city.craigslist.org/search/sss?query=truck&`))
 		})
 
 		It("includes nearby cities", func() {
@@ -55,7 +56,7 @@ var _ = Describe("Query", func() {
 			Expect(err).NotTo(HaveOccurred())
 
 			query := query.NewQuery(params)
-			Expect(query.URL(city)).To(Equal(`https://city.craigslist.org/search/sss?nearbyArea=1&nearbyArea=2&query=truck&searchNearby=2`))
+			Expect(query.URL(city)).To(Equal(`https://city.craigslist.org/search/sss?query=truck&searchNearby=2&nearbyArea=1&nearbyArea=2&`))
 		})
 
 		It("disable duplicates and limits images", func() {
@@ -63,7 +64,7 @@ var _ = Describe("Query", func() {
 			Expect(err).NotTo(HaveOccurred())
 
 			query := query.NewQuery(params)
-			Expect(query.URL(city)).To(Equal(`https://city.craigslist.org/search/sss?bundleDuplicates=1&hasPic=1`))
+			Expect(query.URL(city)).To(Equal(`https://city.craigslist.org/search/sss?bundleDuplicates=1&hasPic=1&`))
 		})
 
 		It("handles ranges", func() {
@@ -71,7 +72,7 @@ var _ = Describe("Query", func() {
 			Expect(err).NotTo(HaveOccurred())
 
 			query := query.NewQuery(params)
-			Expect(query.URL(city)).To(Equal(`https://city.craigslist.org/search/sss?max_auto_year=2000&max_price=2000&min_auto_year=1980&min_price=1000`))
+			Expect(query.URL(city)).To(Equal(`https://city.craigslist.org/search/sss?max_auto_year=2000&min_auto_year=1980&max_price=2000&min_price=1000&`))
 		})
 
 		It("handles categories for searching", func() {
@@ -79,7 +80,7 @@ var _ = Describe("Query", func() {
 			Expect(err).NotTo(HaveOccurred())
 
 			query := query.NewQuery(params)
-			Expect(query.URL(city)).To(Equal(`https://city.craigslist.org/search/cta?query=truck`))
+			Expect(query.URL(city)).To(Equal(`https://city.craigslist.org/search/cta?query=truck&`))
 		})
 	})
 })

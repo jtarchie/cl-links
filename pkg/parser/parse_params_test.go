@@ -1,11 +1,12 @@
 package parser_test
 
 import (
+	"math"
+
 	"github.com/jtarchie/cl-search/pkg/parser"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/ginkgo/extensions/table"
 	. "github.com/onsi/gomega"
-	"math"
 )
 
 var _ = Describe("ParseParams", func() {
@@ -86,7 +87,7 @@ var _ = Describe("ParseParams", func() {
 		Expect(r.Max).To(Equal(math.MaxInt64))
 	})
 
-	When("a URL is provided", func(){
+	When("a URL is provided", func() {
 		It("is parsed", func() {
 			q := `https://denver.craigslist.org/search/msa?searchNearby=1`
 

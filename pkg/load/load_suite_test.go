@@ -1,9 +1,10 @@
 package load_test
 
 import (
-	"github.com/jtarchie/cl-search/pkg/load"
 	"sort"
 	"testing"
+
+	"github.com/jtarchie/cl-search/pkg/load"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"

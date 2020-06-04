@@ -3,11 +3,12 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"github.com/jtarchie/cl-search/pkg/load"
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
 	"strings"
+
+	"github.com/jtarchie/cl-search/pkg/load"
+	"gopkg.in/yaml.v2"
 )
 
 func main() {
@@ -30,7 +31,7 @@ func main() {
 		buffer,
 		"var allCities = %s",
 		strings.Replace(
-			fmt.Sprintf("%#v",cities),
+			fmt.Sprintf("%#v", cities),
 			"load.",
 			"",
 			-1,

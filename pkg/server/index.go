@@ -2,12 +2,13 @@ package server
 
 import (
 	"fmt"
+	"net/http"
+
 	"github.com/jtarchie/cl-search/cmd/server/views"
 	"github.com/jtarchie/cl-search/pkg/load"
 	"github.com/jtarchie/cl-search/pkg/parser"
 	"github.com/jtarchie/cl-search/pkg/query"
 	"github.com/labstack/echo/v4"
-	"net/http"
 )
 
 func Index(cities load.Cities) func(context echo.Context) error {

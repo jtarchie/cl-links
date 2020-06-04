@@ -34,22 +34,17 @@ func (c Cities) FilterByString(
 }
 
 func (c Cities) Unique(
-	duplicate func(city City) interface{},
+	duplicate func(city City) string,
 ) Cities {
 	var newCities Cities
-	duplicates := map[interface{}]Cities{}
+	duplicates := map[string]bool{}
 
 	for _, city := range c {
 		key := duplicate(city)
 		if _, ok := duplicates[key]; !ok {
-			duplicates[key] = Cities{}
+			duplicates[key] = true
+			newCities = append(newCities, city)
 		}
-
-		duplicates[key] = append(duplicates[key], city)
-	}
-
-	for _, cities := range duplicates {
-		newCities = append(newCities, cities[0])
 	}
 
 	return newCities

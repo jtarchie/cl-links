@@ -2,14 +2,15 @@ package server_test
 
 import (
 	"fmt"
+	"net/http"
+	"net/http/httptest"
+	"net/url"
+
 	"github.com/jtarchie/cl-search/pkg/load"
 	"github.com/jtarchie/cl-search/pkg/server"
 	"github.com/labstack/echo/v4"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"net/http"
-	"net/http/httptest"
-	"net/url"
 )
 
 var _ = Describe("Index", func() {

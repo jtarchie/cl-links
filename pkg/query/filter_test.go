@@ -1,12 +1,13 @@
 package query_test
 
 import (
+	"sort"
+
 	"github.com/jtarchie/cl-search/pkg/load"
 	"github.com/jtarchie/cl-search/pkg/parser"
 	"github.com/jtarchie/cl-search/pkg/query"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"sort"
 )
 
 var _ = Describe("Filter", func() {
@@ -20,7 +21,7 @@ var _ = Describe("Filter", func() {
 			{CountryName: "A", RegionName: "2", Name: "zzz"},
 			{CountryName: "B", RegionName: "3", Name: "000"},
 			{CountryName: "C"},
-			{CountryName: "C", NearbyCities: map[string]string{"a":"1"}},
+			{CountryName: "C", NearbyCities: map[string]string{"a": "1"}},
 		}
 		sort.Sort(cities)
 	})
@@ -67,7 +68,7 @@ var _ = Describe("Filter", func() {
 				{CountryName: "A", RegionName: "1", Name: "aaa"},
 				{CountryName: "A", RegionName: "2", Name: "zzz"},
 				{CountryName: "B", RegionName: "3", Name: "000"},
-				{CountryName: "C", NearbyCities: map[string]string{"a":"1"}},
+				{CountryName: "C", NearbyCities: map[string]string{"a": "1"}},
 			}))
 		})
 	})
