@@ -14,12 +14,19 @@
         #open-tabs {
             float: right;
         }
+        ul#links {
+            list-style: none;
+        }
+        li.opened:before {
+            content: '✓';
+            color: green;
+        }
     </style>
     <script>
         function openLinksInTabs() {
-            Array.prototype.slice.call(document.querySelectorAll("#links a:not(.opened)")).slice(0, 10).forEach(function(a) {
+            Array.prototype.slice.call(document.querySelectorAll("#links li:not(.opened) a")).slice(0, 10).forEach(function(a) {
                 window.open(a.getAttribute("href"), "_blank");
-                a.classList.add('.opened');
+                a.closest('li').classList.add('opened');
             })
         }
     </script>

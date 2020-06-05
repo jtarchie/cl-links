@@ -39,12 +39,19 @@ func StreamIndex(qw422016 *qt422016.Writer, originalQuery string, query *query.Q
         #open-tabs {
             float: right;
         }
+        ul#links {
+            list-style: none;
+        }
+        li.opened:before {
+            content: '✓';
+            color: green;
+        }
     </style>
     <script>
         function openLinksInTabs() {
-            Array.prototype.slice.call(document.querySelectorAll("#links a:not(.opened)")).slice(0, 10).forEach(function(a) {
+            Array.prototype.slice.call(document.querySelectorAll("#links li:not(.opened) a")).slice(0, 10).forEach(function(a) {
                 window.open(a.getAttribute("href"), "_blank");
-                a.classList.add('.opened');
+                a.closest('li').classList.add('opened');
             })
         }
     </script>
@@ -55,17 +62,17 @@ func StreamIndex(qw422016 *qt422016.Writer, originalQuery string, query *query.Q
         <div class="col-sm-12 col-md-12 col-lg-12">
             <form action="/">
                 <input type="text" value="`)
-//line views/index.qtpl:32
+//line views/index.qtpl:39
 	qw422016.E().S(originalQuery)
-//line views/index.qtpl:32
+//line views/index.qtpl:39
 	qw422016.N().S(`" placeholder="q:'classic guitar' year:<1995 include-pics"
                        name="query">
                 `)
-//line views/index.qtpl:34
+//line views/index.qtpl:41
 	defaultQuery := `q:"jeep truck" include_nearby has-image bundle-duplicates auto-year:<1985
                 top:nearby`
 
-//line views/index.qtpl:35
+//line views/index.qtpl:42
 	qw422016.N().S(`
                 <div class="collapse">
                     <input type="checkbox" id="collapse-section1" aria-hidden="true">
@@ -73,13 +80,13 @@ func StreamIndex(qw422016 *qt422016.Writer, originalQuery string, query *query.Q
                     <div>
                         <p>
                             Example: <a href="/?query=`)
-//line views/index.qtpl:41
+//line views/index.qtpl:48
 	qw422016.N().U(defaultQuery)
-//line views/index.qtpl:41
+//line views/index.qtpl:48
 	qw422016.N().S(`">`)
-//line views/index.qtpl:41
+//line views/index.qtpl:48
 	qw422016.E().S(defaultQuery)
-//line views/index.qtpl:41
+//line views/index.qtpl:48
 	qw422016.N().S(`</a>
                         </p>
                         <ol>
@@ -140,32 +147,32 @@ func StreamIndex(qw422016 *qt422016.Writer, originalQuery string, query *query.Q
             <button id="open-tabs" onclick="openLinksInTabs(); return false;">Open Links in Tabs</button>
             <ul id="links">
                 `)
-//line views/index.qtpl:100
+//line views/index.qtpl:107
 	for _, city := range cities {
-//line views/index.qtpl:100
+//line views/index.qtpl:107
 		qw422016.N().S(`
                 <li><a target="_blank" href="`)
-//line views/index.qtpl:101
+//line views/index.qtpl:108
 		qw422016.E().S(query.URL(city))
-//line views/index.qtpl:101
+//line views/index.qtpl:108
 		qw422016.N().S(`">`)
-//line views/index.qtpl:101
+//line views/index.qtpl:108
 		qw422016.E().S(city.CountryName)
-//line views/index.qtpl:101
+//line views/index.qtpl:108
 		qw422016.N().S(` / `)
-//line views/index.qtpl:101
+//line views/index.qtpl:108
 		qw422016.E().S(city.RegionName)
-//line views/index.qtpl:101
+//line views/index.qtpl:108
 		qw422016.N().S(` /
                         `)
-//line views/index.qtpl:102
+//line views/index.qtpl:109
 		qw422016.E().S(city.Name)
-//line views/index.qtpl:102
+//line views/index.qtpl:109
 		qw422016.N().S(`</a></li>
                 `)
-//line views/index.qtpl:103
+//line views/index.qtpl:110
 	}
-//line views/index.qtpl:103
+//line views/index.qtpl:110
 	qw422016.N().S(`
             </ul>
         </div>
@@ -174,31 +181,31 @@ func StreamIndex(qw422016 *qt422016.Writer, originalQuery string, query *query.Q
 </body>
 </html>
 `)
-//line views/index.qtpl:110
+//line views/index.qtpl:117
 }
 
-//line views/index.qtpl:110
+//line views/index.qtpl:117
 func WriteIndex(qq422016 qtio422016.Writer, originalQuery string, query *query.Query, cities load.Cities) {
-//line views/index.qtpl:110
+//line views/index.qtpl:117
 	qw422016 := qt422016.AcquireWriter(qq422016)
-//line views/index.qtpl:110
+//line views/index.qtpl:117
 	StreamIndex(qw422016, originalQuery, query, cities)
-//line views/index.qtpl:110
+//line views/index.qtpl:117
 	qt422016.ReleaseWriter(qw422016)
-//line views/index.qtpl:110
+//line views/index.qtpl:117
 }
 
-//line views/index.qtpl:110
+//line views/index.qtpl:117
 func Index(originalQuery string, query *query.Query, cities load.Cities) string {
-//line views/index.qtpl:110
+//line views/index.qtpl:117
 	qb422016 := qt422016.AcquireByteBuffer()
-//line views/index.qtpl:110
+//line views/index.qtpl:117
 	WriteIndex(qb422016, originalQuery, query, cities)
-//line views/index.qtpl:110
+//line views/index.qtpl:117
 	qs422016 := string(qb422016.B)
-//line views/index.qtpl:110
+//line views/index.qtpl:117
 	qt422016.ReleaseByteBuffer(qb422016)
-//line views/index.qtpl:110
+//line views/index.qtpl:117
 	return qs422016
-//line views/index.qtpl:110
+//line views/index.qtpl:117
 }
