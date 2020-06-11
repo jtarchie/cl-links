@@ -17,8 +17,14 @@ func ParseURL(u string) (*Params, error) {
 	cityName := strings.Split(uri.Host, ".")[0]
 	fields["city"] = cityName
 
-	if includeNearby := uri.Query().Get("searchNearby"); includeNearby != "" {
+	query := uri.Query()
+
+	if includeNearby := query.Get("searchNearby"); includeNearby != "" {
 		fields["include_nearby"] = true
+	}
+
+	if postedToday := query.Get("postedToday"); postedToday != "" {
+		fields["posted_today"] = true
 	}
 
 	paths := strings.Split(uri.Path, "/")

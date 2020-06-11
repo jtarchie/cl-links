@@ -31,6 +31,10 @@ func (q Query) URL(city load.City) string {
 		qs.add("hasPic", "1")
 	}
 
+	if v, _ := q.params.GetBoolean("posted_today"); v {
+		qs.add("postedToday", "1")
+	}
+
 	if v, _ := q.params.GetString("q"); v != "" {
 		qs.add("query", v)
 	}

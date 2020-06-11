@@ -59,12 +59,12 @@ var _ = Describe("Query", func() {
 			Expect(query.URL(city)).To(Equal(`https://city.craigslist.org/search/sss?query=truck&searchNearby=2&nearbyArea=1&nearbyArea=2&`))
 		})
 
-		It("disable duplicates and limits images", func() {
-			params, err := parser.ParseParams(`bundle-duplicates has-image`)
+		It("disable duplicates, limits images, posted today", func() {
+			params, err := parser.ParseParams(`posted-today bundle-duplicates has-image`)
 			Expect(err).NotTo(HaveOccurred())
 
 			query := query.NewQuery(params)
-			Expect(query.URL(city)).To(Equal(`https://city.craigslist.org/search/sss?bundleDuplicates=1&hasPic=1&`))
+			Expect(query.URL(city)).To(Equal(`https://city.craigslist.org/search/sss?bundleDuplicates=1&hasPic=1&postedToday=1&`))
 		})
 
 		It("handles ranges", func() {

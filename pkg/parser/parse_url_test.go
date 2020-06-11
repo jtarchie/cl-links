@@ -26,7 +26,7 @@ var _ = Describe("ParseURL", func() {
 	})
 
 	It("handles a full query", func() {
-		url := `https://denver.craigslist.org/search/msa?query=strat*&searchNearby=2&nearbyArea=319&nearbyArea=210&nearbyArea=713&nearbyArea=287&nearbyArea=288&nearbyArea=315`
+		url := `https://denver.craigslist.org/search/msa?postedToday=1&query=strat*&searchNearby=2&nearbyArea=319&nearbyArea=210&nearbyArea=713&nearbyArea=287&nearbyArea=288&nearbyArea=315`
 		params, err := parser.ParseURL(url)
 		Expect(err).NotTo(HaveOccurred())
 
@@ -45,5 +45,9 @@ var _ = Describe("ParseURL", func() {
 		city, err := params.GetString("city")
 		Expect(err).NotTo(HaveOccurred())
 		Expect(city).To(Equal("denver"))
+
+		postedImage, err := params.GetBoolean("posted_today")
+		Expect(err).NotTo(HaveOccurred())
+		Expect(postedImage).To(BeTrue())
 	})
 })
